@@ -45,7 +45,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        if (!hit.collider.CompareTag("Wall"))
+            return;
+
         Rigidbody body = hit.collider.attachedRigidbody;
+
 
         // no rigidbody
         if (body == null || body.isKinematic)
@@ -53,12 +57,8 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        // We dont want to push objects below us
-        if (hit.collider.CompareTag("Wall"))
-        {
-            keepMoving = false;    
-        }
+        keepMoving = false;
 
-        
+
     }
 }

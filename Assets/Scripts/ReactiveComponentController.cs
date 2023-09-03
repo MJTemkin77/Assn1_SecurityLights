@@ -7,16 +7,16 @@ public class ReactiveComponentController : MonoBehaviour
     enum WallFloorType { Wall, Floor };
     [SerializeField] WallFloorType type;
 
-    Rigidbody body;
+    private Light spotLight;
+        
+    
     // Start is called before the first frame update
     void Start()
     {
-        body = GetComponent<Rigidbody>();
-       /* if (type == WallFloorType.Wall)
+        if (type == WallFloorType.Wall)
         {
-            if (body != null)
-                body.constraints = RigidbodyConstraints.FreezeAll;
-        }*/
+            spotLight = gameObject.GetComponentInChildren<Light>();
+        }
 
     }
 
@@ -34,6 +34,11 @@ public class ReactiveComponentController : MonoBehaviour
                 collision.gameObject.name,
                 gameObject.name
                 );
+
+            if (type == WallFloorType.Wall && spotLight != null)
+            {
+                spotLight.intensity = 1;
+            }
         }
     }
 }
