@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     private CharacterController characterController;
 
+    
+
     /// <summary>
     /// Reference to the generated Input Class.
     /// </summary>
@@ -171,5 +173,8 @@ public class PlayerMovement : MonoBehaviour
         if (wcollider.CompareTag("Wall"))
             nextVector = Vector3.zero;
 
+        
+        float distanceBetweenObjects = hit.collider.contactOffset;
+        Debug.LogFormat("OnControllerColliderHit distance = {0}", distanceBetweenObjects);
     }
 }

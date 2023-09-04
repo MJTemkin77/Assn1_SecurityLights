@@ -34,6 +34,7 @@ public class ReactiveFloorTileController : MonoBehaviour
     /// </summary>
     [SerializeField] GameObject wall;
 
+    [SerializeField] float InverseFactorForSpotlight = .15f;
 
     /// <summary>
     /// Reference to the script component for the wall.
@@ -46,7 +47,10 @@ public class ReactiveFloorTileController : MonoBehaviour
     private void Start()
     {
         if (wall != null)
+        {
             wallController = wall.GetComponent<ReactiveComponentController>();
+            wallController.InverseFactorForSpotlight = InverseFactorForSpotlight;
+        }
     }
 
     /// <summary>

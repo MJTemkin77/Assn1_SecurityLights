@@ -46,6 +46,7 @@ public class ReactiveComponentController : MonoBehaviour
     /// currentyRay is used by OnDrawGizmos.
     /// </summary>
     private Ray currentRay;
+    internal float InverseFactorForSpotlight;
 
     /// <summary>
     /// Other scripts need to know if this script has a spotlight component.
@@ -103,6 +104,13 @@ public class ReactiveComponentController : MonoBehaviour
         if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity))
         {
             distanceToObstacle = hitInfo.distance;
+
+            float spotLightIntensity = 1f;
+            if (InverseFactorForSpotlight > 0)
+            {
+                spotLightIntensity =  InverseFactorForSpotlight/ distanceToObstacle;
+                spotLight.intensity = spotLightIntensity;
+            }
 
             // Initialize the local variable ray is copied to the class variable currentRay
             // as it is being used by OnDrawGizmos.
