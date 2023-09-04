@@ -170,7 +170,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.3380822, g: 0.9150943, b: 0.14388269, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 50
   m_InnerSpotAngle: 21.80208
@@ -589,8 +589,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.026980251, y: 0.69999814, z: -0.026475117, w: -0.7131435}
-  m_LocalPosition: {x: 1.6907853, y: 1.1031215, z: -0.55645764}
+  m_LocalRotation: {x: 0.08392336, y: 0.7328586, z: -0.09194262, w: 0.6688959}
+  m_LocalPosition: {x: -1.9443198, y: 0.64774364, z: 0.17781347}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -613,7 +613,7 @@ GameObject:
   - component: {fileID: 1020845580}
   m_Layer: 0
   m_Name: Wall
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -730,6 +730,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fb3dd473a3762743b24133d15e9ba0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
 --- !u!54 &1020845580
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -755,7 +756,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!1 &1674030517
 GameObject:
@@ -770,9 +771,11 @@ GameObject:
   - component: {fileID: 1674030520}
   - component: {fileID: 1674030523}
   - component: {fileID: 1674030524}
+  - component: {fileID: 1674030525}
+  - component: {fileID: 1674030526}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -836,7 +839,7 @@ Transform:
   m_GameObject: {fileID: 1674030517}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -0.16}
+  m_LocalPosition: {x: 0, y: 0.14, z: 0.81}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -880,7 +883,111 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ae6f72d0d2b2bc4b9adeed1d9343066, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 1
+  doDebug: 0
+--- !u!114 &1674030525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674030517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 264276b896b5ce245acba01f489d30fe, type: 3}
+  m_NotificationBehavior: 3
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0fa7ec52-1c32-4eb6-a4bb-781c35e7370a
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ea9def72-b343-4758-858e-dd4e5a1c4c95
+    m_ActionName: Player/Look[/Mouse/delta,/Pen/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bc12421a-c602-4864-be36-2d1f6f89d61c
+    m_ActionName: Player/Fire[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7179f37a-7bfc-4593-af29-cce78c3d5e60
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3949065d-a014-485b-8b54-c8e952679376
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f80abada-4094-4805-b143-3e045480bce6
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a90df0b6-7583-40af-8edf-60e835a47bda
+    m_ActionName: UI/Point[/Mouse/position,/Pen/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3c15a5fa-0e56-4759-bd40-6d35f5a9d50e
+    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fd4c0f37-e155-45ea-8182-057a78f12745
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ab724b3e-4515-4eb6-b673-cb8a39006519
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8be65d5f-b652-4886-a6be-1a68e1f6fcf6
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5ca0fa41-7c5a-403b-ba53-be88a65f0e17
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 16c85116-897c-4400-8eda-f6c847466830
+    m_ActionName: UI/TrackedDeviceOrientation
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!65 &1674030526
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1674030517}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1817237395
 GameObject:
   m_ObjectHideFlags: 0
@@ -898,7 +1005,7 @@ GameObject:
   - component: {fileID: 1817237402}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: ReactiveFloor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1014,6 +1121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fb3dd473a3762743b24133d15e9ba0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
 --- !u!54 &1817237402
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1089,6 +1197,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WallAction: 1
   FloorAction: 0
+  floor: {fileID: 1817237395}
+  wall: {fileID: 1020845572}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

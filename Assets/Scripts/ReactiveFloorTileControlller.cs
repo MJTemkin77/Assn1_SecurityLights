@@ -2,22 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReactiveFloorTileControlller : MonoBehaviour
+public class ReactiveFloorTileController : MonoBehaviour
 {
     enum TileActions { None, SlideUp, SlideDown, SwingOpen, DropsAway }
     [SerializeField] TileActions WallAction;
     [SerializeField] TileActions FloorAction;
 
+    [SerializeField] GameObject floor;
+    [SerializeField] GameObject wall;
 
-    // Start is called before the first frame update
-    void Start()
+    private ReactiveComponentController wallController;
+
+    private void Start()
     {
-        
+        if (wall != null)
+            wallController = wall.GetComponent<ReactiveComponentController>();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void DoSphere(GameObject target)
     {
-        
+        if (wall != null && wallController.HasSpotlight)
+        {
+            wallController.DoSphere(target);
+        }
     }
 }
