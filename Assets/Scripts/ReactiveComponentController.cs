@@ -38,8 +38,8 @@ public class ReactiveComponentController : MonoBehaviour
     /// <summary>
     /// The designer will choose the maximum intensity applied to the spotlight.
     /// </summary>
-    [Range(0, 1f)]
-    [SerializeField] float maxSpotlightIntensity = 1.0f;
+    
+    public float maxSpotlightIntensity = 1.0f;
 
     /// <summary>
     /// Class variable that stores the current ray initialized in DoSphere.

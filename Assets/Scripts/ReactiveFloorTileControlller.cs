@@ -34,7 +34,14 @@ public class ReactiveFloorTileController : MonoBehaviour
     /// </summary>
     [SerializeField] GameObject wall;
 
-    [SerializeField] float InverseFactorForSpotlight = .15f;
+    [SerializeField] float InverseFactorForSpotlight = 1f;
+
+    /// <summary>
+    /// The designer will choose the maximum intensity applied to the spotlight.
+    /// </summary>
+    [Range(0, 20)]
+    [SerializeField] float maxSpotlightIntensity = 1.0f;
+
 
     /// <summary>
     /// Reference to the script component for the wall.
@@ -50,6 +57,7 @@ public class ReactiveFloorTileController : MonoBehaviour
         {
             wallController = wall.GetComponent<ReactiveComponentController>();
             wallController.InverseFactorForSpotlight = InverseFactorForSpotlight;
+            wallController.maxSpotlightIntensity = maxSpotlightIntensity;
         }
     }
 
