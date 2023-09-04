@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// NOTE: This script is NOT currently in use by the scene. It was used for doing 
+/// a simple Raycast between two game objects and to demonstrate using a LineRenderer component.
+/// </summary>
 public class RaycastShoot : MonoBehaviour
 {
     [SerializeField] private GameObject target;

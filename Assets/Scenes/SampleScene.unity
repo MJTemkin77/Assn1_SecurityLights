@@ -261,7 +261,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f0c1ca114e6c454458ef9eacae4eff80, type: 2}
+  - {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -731,6 +731,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  lightMount: {fileID: 318977152}
+  spotLight: {fileID: 318977154}
+  maxSpotlightIntensity: 1
 --- !u!54 &1020845580
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1122,6 +1125,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  lightMount: {fileID: 0}
+  spotLight: {fileID: 0}
+  maxSpotlightIntensity: 1
 --- !u!54 &1817237402
 Rigidbody:
   m_ObjectHideFlags: 0
