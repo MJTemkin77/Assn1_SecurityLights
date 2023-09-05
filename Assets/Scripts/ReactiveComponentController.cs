@@ -35,10 +35,12 @@ public class ReactiveComponentController : MonoBehaviour
     /// </summary>
     [SerializeField] Light spotLight;
 
+    public ReactiveWallMovement reactiveWallMovement;
+
     /// <summary>
     /// The designer will choose the maximum intensity applied to the spotlight.
     /// </summary>
-    
+
     public float maxSpotlightIntensity = 1.0f;
 
     /// <summary>
@@ -47,12 +49,27 @@ public class ReactiveComponentController : MonoBehaviour
     /// </summary>
     private Ray currentRay;
     internal float InverseFactorForSpotlight;
+    internal TileActions WallAction;
 
     /// <summary>
     /// Other scripts need to know if this script has a spotlight component.
     /// </summary>
     public bool HasSpotlight => spotLight != null;
 
+    private void Start()
+    {
+        if (type == WallFloorType.Wall)
+        {
+            reactiveWallMovement =
+                GetComponent<ReactiveWallMovement>();
+            if (reactiveWallMovement != null)
+            {
+                reactiveWallMovement.WallAction = WallAction;
+            }
+        }
+    }
+    bool didMove = false;
+    private float swingAmount = 35;
 
     /// <summary>
     /// When the Player collides with the surface, where the surface is a wall,
@@ -72,75 +89,99 @@ public class ReactiveComponentController : MonoBehaviour
             if (type == WallFloorType.Wall && spotLight != null)
             {
                 spotLight.intensity = maxSpotlightIntensity;
-            }
-
+                if (!didMove)
+                {
+                    Vector3 actionVector = Vector3.zero;
+                    switch (WallAction)
+                    {
+                        case TileActions.SlideUp:
+                            Bounds targetBounds =
+                            collision.gameObject.GetComponent<BoxCollider>().bounds;
+                            targetBounds.Expand(targetBounds.size * 1.1f);
+                            actionVector = targetBounds.size;
+                            break;
+                        case TileActions.SlideDown:
+                            Bounds wallBounds =
+                            gameObject.GetComponent<BoxCollider>().bounds;
+                            actionVector = wallBounds.size;
+                            break;
+                        case TileActions.SwingOpen:
+                            actionVector = new Vector3(0, 0, swingAmount);
+                            break;
+                    }
+                    reactiveWallMovement.DoAction(actionVector);
+                    didMove = true;
+                }
         }
+
     }
+}
 
-    /// <summary>
-    /// DoSphere is called indirectly by a Player event when the player is in contact 
-    /// with the game object connected with the instance of this script.
-    /// </summary>
-    /// <param name="target">The player</param>
-    public void TrackTarget(GameObject target)
+/// <summary>
+/// DoSphere is called indirectly by a Player event when the player is in contact 
+/// with the game object connected with the instance of this script.
+/// </summary>
+/// <param name="target">The player</param>
+public void TrackTarget(GameObject target)
+{
+
+    // Reference to the world position of the child game object that hosts the spotlight.
+    Vector3 p1 = lightMount.transform.position;
+
+    // Used to store the distance between the spotlight and the target.
+    float distanceToObstacle = 0;
+
+    // The distance as a Vector3 between the spotlight and the target.
+    Vector3 direction = target.transform.position - p1;
+
+    // Stores the information about the hit.
+    RaycastHit hitInfo;
+
+    // Create a ray between the spotlight and the target
+    Ray ray = new Ray(p1, direction);
+
+    // Determine the distance if there is a hit. This will be used in a later task.
+    if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity))
     {
+        distanceToObstacle = hitInfo.distance;
 
-        // Reference to the world position of the child game object that hosts the spotlight.
-        Vector3 p1 = lightMount.transform.position;
-
-        // Used to store the distance between the spotlight and the target.
-        float distanceToObstacle = 0;
-
-        // The distance as a Vector3 between the spotlight and the target.
-        Vector3 direction = target.transform.position - p1;
-
-        // Stores the information about the hit.
-        RaycastHit hitInfo;
-
-        // Create a ray between the spotlight and the target
-        Ray ray = new Ray(p1, direction);
-        
-        // Determine the distance if there is a hit. This will be used in a later task.
-        if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity))
+        float spotLightIntensity = 1f;
+        if (InverseFactorForSpotlight > 0)
         {
-            distanceToObstacle = hitInfo.distance;
-
-            float spotLightIntensity = 1f;
-            if (InverseFactorForSpotlight > 0)
-            {
-                spotLightIntensity =  InverseFactorForSpotlight/ distanceToObstacle;
-                spotLight.intensity = spotLightIntensity;
-            }
-
-            // Initialize the local variable ray is copied to the class variable currentRay
-            // as it is being used by OnDrawGizmos.
-            currentRay = ray;
-            Debug.LogFormat($"Distance to obstacle:{distanceToObstacle}");
+            spotLightIntensity = InverseFactorForSpotlight / distanceToObstacle;
+            spotLight.intensity = spotLightIntensity;
         }
-    }
 
-    /// <summary>
-    /// The player is no longer touching the surface that this script is attached to.
-    /// </summary>
-    /// <param name="collision">The object that collided with the surface.</param>
-    private void OnCollisionExit(Collision collision)
+        // Initialize the local variable ray is copied to the class variable currentRay
+        // as it is being used by OnDrawGizmos.
+        currentRay = ray;
+        //Debug.LogFormat($"Distance to obstacle:{distanceToObstacle}");
+    }
+}
+
+/// <summary>
+/// The player is no longer touching the surface that this script is attached to.
+/// </summary>
+/// <param name="collision">The object that collided with the surface.</param>
+private void OnCollisionExit(Collision collision)
+{
+
+    if (collision.collider.CompareTag("Player"))
     {
-        if (collision.collider.CompareTag("Player"))
+        if (type == WallFloorType.Wall && spotLight != null)
         {
-            if (type == WallFloorType.Wall && spotLight != null)
-            {
-                spotLight.intensity = 0;
-            }
+            spotLight.intensity = 0;
         }
-
     }
 
-    /// <summary>
-    /// Used for visual debugging within the scene window.
-    /// </summary>
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(currentRay.origin, currentRay.direction);
-        
-    }
+}
+
+/// <summary>
+/// Used for visual debugging within the scene window.
+/// </summary>
+private void OnDrawGizmos()
+{
+    Gizmos.DrawLine(currentRay.origin, currentRay.direction);
+
+}
 }
